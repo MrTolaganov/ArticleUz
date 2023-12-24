@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logo } from "../constants";
 import { Input } from "../ui";
 import { useDispatch, useSelector } from "react-redux";
 import { signUserFailure, signUserStart, signUserSuccess } from "../slice/auth";
 import AuthService from "../service/auth";
 import { ValidationError } from "./";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const loginHandler = async (event) => {
     event.preventDefault();
@@ -19,10 +21,17 @@ const Login = () => {
     try {
       const response = await AuthService.userLogin(user);
       dispatch(signUserSuccess(response.user));
+      navigate("/");
     } catch (error) {
       dispatch(signUserFailure(error.response.data.errors));
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="w-25 mx-auto text-lg-center">
