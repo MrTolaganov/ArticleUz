@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { logo } from "../constants";
+import { useSelector } from "react-redux";
 import "../scss/header.scss";
 
 const Navbar = () => {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  console.log(isLoggedIn); 
+
   return (
     <div className="d-flex flex-column flex-md-row align-items-center mb-4 border-bottom container">
       <Link to={"/"} className="d-flex align-items-center text-decoration-none">
