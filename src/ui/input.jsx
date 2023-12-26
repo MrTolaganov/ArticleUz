@@ -1,6 +1,6 @@
 const Input = ({ label, type, state, setState }) => {
   return (
-    <div className="form-floating mb-3">
+    <div className="form-floating">
       <input
         type={type}
         className="form-control"
