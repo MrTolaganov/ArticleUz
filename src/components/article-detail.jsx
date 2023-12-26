@@ -8,8 +8,8 @@ import {
   getArticleDetailStart,
   getArticleDetailSuccess,
 } from "../slice/article";
-import "../scss/author-card.scss";
 import { Loader } from "../ui";
+import "../scss/author-card.scss";
 
 const ArticleDetail = () => {
   const { slug } = useParams();

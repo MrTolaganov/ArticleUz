@@ -8,12 +8,11 @@ import {
   Navbar,
   ArticleDetail,
   CreateArticle,
+  EditArticle,
 } from "./components";
 import AuthService from "./service/auth";
 import { signUserSuccess } from "./slice/auth";
 import { getItem } from "./helpers/persistance-storage";
-import ArticleService from "./service/article";
-import { getArticleStart, getArticleSuccess } from "./slice/article";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,22 +26,11 @@ const App = () => {
     }
   };
 
-  const getArticles = async () => {
-    dispatch(getArticleStart());
-    try {
-      const response = await ArticleService.getArticles();
-      dispatch(getArticleSuccess(response.articles));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     const token = getItem("token");
     if (token) {
       getUser();
     }
-    getArticles();
   }, []);
 
   return (
@@ -55,6 +43,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/article/:slug" element={<ArticleDetail />} />
           <Route path="/create-article" element={<CreateArticle />} />
+          <Route path="/edit-article/:slug" element={<EditArticle />} />
         </Routes>
       </div>
     </div>
